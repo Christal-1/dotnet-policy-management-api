@@ -1,0 +1,21 @@
+name: .NET build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore
+        run: dotnet restore PolicyManagementApi.csproj
+      - name: Build
+        run: dotnet build PolicyManagementApi.csproj --no-restore --configuration Release
